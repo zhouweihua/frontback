@@ -1,1 +1,3 @@
-将前端 node redis 数据库 结合在一起
+将前端 webpack 短信登录 node redis 数据库 结合在一起
+
+1 建立好前端webpack打包流程 打包到build文件夹下
