@@ -1,6 +1,6 @@
 const Router = require('koa-router')
 
-const home = require('../controllers/home')
+const home = require('../controllers/home') // todo 如何做到省略../
 const customRouter = require('./router')
 
 const router = new Router()
