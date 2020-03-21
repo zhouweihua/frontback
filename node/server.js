@@ -11,6 +11,7 @@ const path = require('path')
 const Koa = require('koa')
 const nunjucks = require('koa-nunjucks-2')
 const bodyParser = require('koa-bodyparser')
+const static = require('koa-static');
 const router = require('./router')
 
 const app = new Koa()
@@ -26,6 +27,12 @@ app.use(
         },
     }),
 )
+
+// 配置静态资源
+const staticPath = '../build'
+app.use(static(
+    path.join( __dirname, staticPath)
+))
 
 // 路由配置
 app.use(router.routes(), router.allowedMethods())

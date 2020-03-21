@@ -1,19 +1,36 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const webpack = require('webpack')
-
+const WebpackPluginHashOutput = require('webpack-plugin-hash-output')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
-const babelConfig = require('./babel.config')
+const babelConfig = require('../babel.config')
 
 module.exports = {
 	mode: 'production',
-	entry: __dirname + "/app/index.js",
-	devtool: "source-map",
-	output: {
-		path: __dirname + "/build",
-		filename: "bundle.js"
+	entry: __dirname + "/../app/app.js",
+	devtool: 'none',
+	optimization: {
+	  splitChunks: {
+		// 1. 只对入口 chunk 进行拆包
+		// chunks: 'initial'
+		// 2. 更加精细化控制拆包范围
+		cacheGroups: {
+		  styles: {
+			name: 'styles',
+			test: /\.(less|css)$/,
+			chunks: 'all',
+			enforce: true,
+		  },
+		},
+	  },
 	},
-
+	output: {
+	  path: __dirname + "/../build",
+	  publicPath: "./",
+	  filename: '[chunkhash].js',
+	  chunkFilename: '[chunkhash].js',
+	  hashDigestLength: 22,
+	},
 	module: {
 		rules: [{
 			test: /\.(js|jsx)$/,
@@ -37,9 +54,8 @@ module.exports = {
 			filename: '[name].css',
 		  }),
 		new HtmlWebpackPlugin({
-			filename: __dirname + "/build/index.html",
+			filename: __dirname + "/../build/index.html",
 			template: 'index.html'
 		}),
-
 	],
 }
