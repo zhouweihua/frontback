@@ -8,15 +8,13 @@ export default class ComponentTest extends React.Component {
       reflash: false,
     }
   }
+
   static propTypes = {
     data: PropTypes.object.isRequired,
   }
 
   render() {
-    const {
-      data,
-      loading,
-    } = this.props
+    const { data } = this.props
 
     return <div>{data}</div>
   }

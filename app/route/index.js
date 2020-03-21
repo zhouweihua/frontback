@@ -1,7 +1,7 @@
 import React from 'react'
 import { Route, Switch, Redirect } from 'react-router-dom'
 
-import Home from '../containers/home'
+import Home from 'containers/home'
 
 const RouterCmp = () => (
   <Switch>
