@@ -10,13 +10,10 @@ const babelConfig = require('../babel.config')
 
 module.exports = {
   mode: 'production',
-  entry: __dirname + '/../app/app.js',
+  entry: path.join(__dirname, '/../app/app.js'),
   devtool: 'none',
   optimization: {
     splitChunks: {
-      // 1. 只对入口 chunk 进行拆包
-      // chunks: 'initial'
-      // 2. 更加精细化控制拆包范围
       cacheGroups: {
         styles: {
           name: 'styles',
@@ -37,7 +34,7 @@ module.exports = {
     },
   },
   output: {
-    path: __dirname + '/../build',
+    path: path.join(__dirname, '/../build'),
     publicPath: `${staticPrefix}`,
     filename: '[chunkhash].js',
     chunkFilename: '[chunkhash].js',
@@ -75,7 +72,7 @@ module.exports = {
       },
     }),
     new HtmlWebpackPlugin({
-      filename: __dirname + '/../build/index.html',
+      filename: path.join(__dirname, '/../build/index.html'),
       template: 'index.html',
     }),
   ],
