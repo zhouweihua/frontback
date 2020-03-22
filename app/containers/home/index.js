@@ -58,7 +58,6 @@ export default class Home extends React.Component {
       res = await axios.post('/my/api/sendSms', {
         tel: this.state.tel,
       })
-      console.log(res)
     } else {
       if (!this.state.weixin) {
         alert('请输入微信号')
@@ -75,17 +74,16 @@ export default class Home extends React.Component {
         username: this.state.username,
         weixin: this.state.weixin,
       })
-      console.log(res)
-      if (res && res.status !== 0) {
-        alert(res.msg || '发送失败 请重试')
-      }
     }
+
+    console.log(res)
 
     if (res && res.status === 9001) {
       // 没有该用户 需要填写姓名已经微信号
       this.setState({
         submitFlag: 1,
       })
+      alert('没有该用户 需要填写姓名已经微信号--' + res.status)
     }
 
     if (res && res.status === 9004) {
@@ -135,22 +133,22 @@ export default class Home extends React.Component {
       return
     }
 
-    if (this.state.submitFlag !== 0) {
-      if (!this.state.weixin) {
-        alert('请输入微信号')
-        return
-      }
-      if (!this.state.username) {
-        alert('请输入用户姓名')
-        return
-      }
-    }
-
     const res = await axios.post('/my/api/userVerify', {
       tel: this.state.tel,
-      verify: this.state.tel,
+      verify: this.state.verify,
     })
     console.log(res)
+
+    if (res && res.status === 9003) {
+      // 短信验证码错误
+      alert('短信验证码错误--' + res.status)
+    }
+
+    if (res && res.status === 0) {
+      alert('登录成功')
+    } else {
+      alert('登录失败--' + res.status)
+    }
   }
 
   render() {
