@@ -12,11 +12,14 @@ const Koa = require('koa')
 const nunjucks = require('koa-nunjucks-2')
 const bodyParser = require('koa-bodyparser')
 const koaStatic = require('koa-static')
+
 const router = require('./router')
+const userToken = require('./middlewares/user-token')
 
 const app = new Koa()
 
 app.use(bodyParser())
+
 app.use(
   nunjucks({
     ext: 'html',
@@ -27,6 +30,9 @@ app.use(
     },
   }),
 )
+
+// 添加用户token
+app.use(userToken())
 
 // 配置静态资源
 const staticPath = '../build'

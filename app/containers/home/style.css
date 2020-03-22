@@ -1,0 +1,44 @@
+.homeContainer {
+  display: flex;
+  flex-flow: column;
+}
+.homeContainer .inputInfo {
+  display: flex;
+  flex-flow: column;
+  font-size: 14px;
+  line-height: 20px;
+}
+.homeContainer .inputInfo .commonInput {
+  display: flex;
+  margin-top: 10px;
+}
+.homeContainer .inputInfo .commonInput .commonNum {
+  margin-left: 5px;
+}
+.homeContainer .inputInfo .verifyInput {
+  display: flex;
+  margin-top: 10px;
+}
+.homeContainer .inputInfo .verifyInput .verifyNum {
+  margin-left: 5px;
+}
+.homeContainer .inputInfo .verifyInput .smsSend {
+  margin-left: 5px;
+  width: 90px;
+  height: 20px;
+  border-radius: 5px;
+  text-align: center;
+  color: #fff;
+  background-color: #D94B40;
+}
+.homeContainer .submitInfo {
+  margin-top: 10px;
+  font-size: 14px;
+  line-height: 20px;
+  width: 50px;
+  height: 20px;
+  border-radius: 5px;
+  text-align: center;
+  color: #fff;
+  background-color: #D94B40;
+}

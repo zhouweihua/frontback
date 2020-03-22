@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "sleep get money",
   "scripts": {
-    "start": "node config/compile.js",
+    "start": "nodemon -w app config/compile.js",
     "lint": "eslint ."
   },
   "author": "zhouweihua",
@@ -35,6 +35,7 @@
     "file-loader": "^2.0.0",
     "fs-extra": "^9.0.0",
     "html-webpack-plugin": "^4.0.0-beta.8",
+    "jsonwebtoken": "^8.5.1",
     "koa": "^2.11.0",
     "koa-bodyparser": "^4.2.1",
     "koa-nunjucks-2": "^3.0.2",
