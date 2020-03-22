@@ -36,9 +36,9 @@ export default class Home extends React.Component {
     })
   }
 
-  handleChagneVerify = e => {
+  handleChagneWeixin = e => {
     this.setState({
-      verify: e.target.value,
+      weixin: e.target.value,
     })
   }
 
@@ -52,50 +52,11 @@ export default class Home extends React.Component {
       alert('请稍后再试')
       return
     }
-    let res
-    if (this.state.submitFlag === 0) {
-      // 用户已经注册的情况下发送短信
-      res = await axios.post('/my/api/sendSms', {
-        tel: this.state.tel,
-      })
-    } else {
-      if (!this.state.weixin) {
-        alert('请输入微信号')
-        return
-      }
+    const res = await axios.post('/my/api/sendSms', {
+      tel: this.state.tel,
+    })
 
-      if (!this.state.username) {
-        alert('请输入用户姓名')
-        return
-      }
-
-      res = await axios.post('/my/api/sendSmsWithVerify', {
-        tel: this.state.tel,
-        username: this.state.username,
-        weixin: this.state.weixin,
-      })
-    }
-
-    console.log(res)
-
-    if (res && res.status === 9001) {
-      // 没有该用户 需要填写姓名已经微信号
-      this.setState({
-        submitFlag: 1,
-      })
-      alert('没有该用户 需要填写姓名已经微信号--' + res.status)
-    }
-
-    if (res && res.status === 9004) {
-      // 短信发送成功 倒计时
-      this.setState({
-        countDownText: 60,
-        countDownDisable: true,
-      })
-      this.countDownTime()
-    } else {
-      alert('短信发送失败 请重试--' + res.status)
-    }
+    this.getAlertInfo(res)
   }
 
   countDownTime = () => {
@@ -133,21 +94,44 @@ export default class Home extends React.Component {
       return
     }
 
+    if (this.state.submitFlag === 1) {
+      // 验证验证码之后将用户信息存储下来
+      if (!this.state.weixin) {
+        alert('请输入微信号')
+        return
+      }
+      if (!this.state.username) {
+        alert('请输入用户姓名')
+        return
+      }
+    }
+
     const res = await axios.post('/my/api/userVerify', {
       tel: this.state.tel,
       verify: this.state.verify,
+      username: this.state.username,
+      weixin: this.state.weixin,
+      submitFlag: this.state.submitFlag,
     })
-    console.log(res)
+    this.getAlertInfo(res)
+  }
 
-    if (res && res.status === 9003) {
-      // 短信验证码错误
-      alert('短信验证码错误--' + res.status)
+  getAlertInfo = res => {
+    if (res && (res.status === 9001 || res.status === 9002)) {
+      this.setState({
+        submitFlag: res.status === 9001 ? 1 : 0, // 9001: 没有该用户 需要填写姓名已经微信号 同时短信也会发送出去
+        countDownText: 60,
+        countDownDisable: true,
+      })
+      this.countDownTime()
     }
 
     if (res && res.status === 0) {
       alert('登录成功')
+      return true
     } else {
-      alert('登录失败--' + res.status)
+      alert((res.msg || '不明失败') + '--' + res.status)
+      return false
     }
   }
 
@@ -160,6 +144,18 @@ export default class Home extends React.Component {
           <div className="commonInput">
             <div>手机号</div>
             <input className="commonNum" onChange={this.handleChagneTel} value={this.state.tel} />
+          </div>
+
+          <div className="verifyInput">
+            <div>验证码</div>
+            <input
+              className="verifyNum"
+              onChange={this.handleChagneVerify}
+              value={this.state.verify}
+            />
+            <div className="smsSend" onClick={this.handleSendSms}>
+              {this.state.countDownText}
+            </div>
           </div>
 
           {submitFlag ? (
@@ -185,18 +181,6 @@ export default class Home extends React.Component {
           ) : null}
 
           {submitFlag ? <div>* 只有填写了姓名以及微信号才能发送验证码</div> : null}
-
-          <div className="verifyInput">
-            <div>验证码</div>
-            <input
-              className="verifyNum"
-              onChange={this.handleChagneVerify}
-              value={this.state.verify}
-            />
-            <div className="smsSend" onClick={this.handleSendSms}>
-              {this.state.countDownText}
-            </div>
-          </div>
         </div>
         <div className="submitInfo" onClick={this.handleSubmitInfo}>
           提交
