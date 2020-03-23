@@ -35,6 +35,14 @@ module.exports = mainRouter => {
             msg: '短信已发送',
           },
         })
+      } else if (userRes && userRes.code === 2) {
+        return (ctx.body = {
+          code: 1,
+          data: {
+            status: 1,
+            msg: '查询失败',
+          },
+        })
       } else {
         // 用户不存在 要求用户填写基本信息
         return (ctx.body = {

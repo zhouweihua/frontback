@@ -48,6 +48,10 @@ export default class Home extends React.Component {
       alert('请输入手机号')
       return
     }
+    if (!/^1[2,3,4,5,6,7,8,9][0-9]{9}$/.test(this.state.tel)) {
+      alert('手机格式不正确')
+      return
+    }
     if (this.state.countDownDisable) {
       alert('请稍后再试')
       return
@@ -130,7 +134,7 @@ export default class Home extends React.Component {
       alert('登录成功')
       return true
     } else {
-      alert((res.msg || '不明失败') + '--' + res.status)
+      alert(((res && res.msg) || '不明失败') + '--' + res.status)
       return false
     }
   }
@@ -143,13 +147,19 @@ export default class Home extends React.Component {
         <div className="inputInfo">
           <div className="commonInput">
             <div>手机号</div>
-            <input className="commonNum" onChange={this.handleChagneTel} value={this.state.tel} />
+            <input
+              className="commonNum"
+              maxLength="11"
+              onChange={this.handleChagneTel}
+              value={this.state.tel}
+            />
           </div>
 
           <div className="verifyInput">
             <div>验证码</div>
             <input
               className="verifyNum"
+              maxLength="4"
               onChange={this.handleChagneVerify}
               value={this.state.verify}
             />
