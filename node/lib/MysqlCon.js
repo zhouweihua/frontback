@@ -1,10 +1,11 @@
 const mysql = require('mysql')
 
+const appConfig = require('../../config/app.config.js')
 const connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '123456',
-  database: 'm2m',
+  host: appConfig.mysqlConfig.host,
+  user: appConfig.mysqlConfig.user,
+  password: appConfig.mysqlConfig.password,
+  database: appConfig.mysqlConfig.database,
 })
 
 connection.connect()

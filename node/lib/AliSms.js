@@ -1,11 +1,13 @@
-const Core = require('@alicloud/pop-core')
+// const Core = require('@alicloud/pop-core')
 
-const client = new Core({
-  accessKeyId: '<accessKeyId>',
-  accessKeySecret: '<accessSecret>',
-  endpoint: 'https://dysmsapi.aliyuncs.com',
-  apiVersion: '2017-05-25',
-})
+// const appConfig = require('../../config/app.config.js')
+
+// const client = new Core({
+//   accessKeyId: appConfig.aliSmsConfig.accessKeyId,
+//   accessKeySecret: appConfig.aliSmsConfig.accessKeySecret,
+//   endpoint: 'https://dysmsapi.aliyuncs.com',
+//   apiVersion: '2017-05-25',
+// })
 
 // const params = {
 //   "RegionId": "cn-hangzhou"
@@ -20,5 +22,13 @@ const client = new Core({
 // }, (ex) => {
 //   console.log(ex);
 // })
-
-module.exports = client
+const aliSms = {}
+aliSms.sendSms = () => {
+  return {
+    code: 0,
+    data: {
+      code: 1234,
+    },
+  }
+}
+module.exports = aliSms
