@@ -24,11 +24,13 @@
 // })
 const aliSms = {}
 aliSms.sendSms = () => {
-  return {
-    code: 0,
-    data: {
-      code: 1234,
-    },
-  }
+  return new Promise((resolve, reject) => {
+    resolve({
+      code: 0,
+      data: {
+        smsCode: 1234,
+      },
+    })
+  })
 }
 module.exports = aliSms

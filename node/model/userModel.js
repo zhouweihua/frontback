@@ -1,3 +1,5 @@
+// 0 成功 1 业务出错 2 底层程序出错
+
 const MysqlCon = require('../lib/MysqlCon')
 const moment = require('moment')
 
